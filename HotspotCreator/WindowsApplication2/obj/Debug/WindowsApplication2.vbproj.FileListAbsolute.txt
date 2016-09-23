@@ -1,0 +1,11 @@
+J:\1200206\Source\Repos\HotspotCreator\WindowsApplication2\bin\Debug\WindowsApplication2.exe.config
+J:\1200206\Source\Repos\HotspotCreator\WindowsApplication2\bin\Debug\WindowsApplication2.exe
+J:\1200206\Source\Repos\HotspotCreator\WindowsApplication2\bin\Debug\WindowsApplication2.pdb
+J:\1200206\Source\Repos\HotspotCreator\WindowsApplication2\bin\Debug\WindowsApplication2.xml
+J:\1200206\Source\Repos\HotspotCreator\WindowsApplication2\obj\Debug\WindowsApplication2.vbprojResolveAssemblyReference.cache
+J:\1200206\Source\Repos\HotspotCreator\WindowsApplication2\obj\Debug\WindowsApplication2.Form1.resources
+J:\1200206\Source\Repos\HotspotCreator\WindowsApplication2\obj\Debug\WindowsApplication2.Resources.resources
+J:\1200206\Source\Repos\HotspotCreator\WindowsApplication2\obj\Debug\WindowsApplication2.vbproj.GenerateResource.Cache
+J:\1200206\Source\Repos\HotspotCreator\WindowsApplication2\obj\Debug\WindowsApplication2.exe
+J:\1200206\Source\Repos\HotspotCreator\WindowsApplication2\obj\Debug\WindowsApplication2.xml
+J:\1200206\Source\Repos\HotspotCreator\WindowsApplication2\obj\Debug\WindowsApplication2.pdb
