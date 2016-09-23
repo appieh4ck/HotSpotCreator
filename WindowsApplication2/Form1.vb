@@ -3,12 +3,22 @@
 Public Class Form1
     Dim virtAdapterName As String
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnStart.Click
-        Process.Start("CMD", "/C netsh wlan set hostednetwork mode=allow ssid=" & TextBox1.Text & " key=" & TextBox2.Text)
-        Process.Start("CMD", "/C netsh wlan start hostednetwork")
 
-        Threading.Thread.Sleep(500)
+        Try
+            If TextBox1.Text = "" Or TextBox2.Text = "" Then
+                MsgBox("Gelieve de invoervelden controleren aub")
+            Else
+                'Process.Start("CMD", "/C netsh wlan set hostednetwork mode=allow ssid=" & TextBox1.Text & " key=" & TextBox2.Text)
+                'Process.Start("CMD", "/C netsh wlan start hostednetwork")
+                CMDStart(CStr("/C netsh wlan set hostednetwork mode=allow ssid=" & TextBox1.Text & " key=" & TextBox2.Text))
+                CMDStart(CStr("/C netsh wlan start hostednetwork"))
+                Threading.Thread.Sleep(500)
 
-        EnableDisableICS(CStr(ComboBox1.SelectedItem), virtAdapterName, 1)
+                EnableDisableICS(CStr(ComboBox1.SelectedItem), virtAdapterName, 1)
+            End If
+        Catch
+        End Try
+
 
     End Sub
 
@@ -93,19 +103,21 @@ Public Class Form1
 
     Private Sub btnStop_Click(sender As Object, e As EventArgs) Handles btnStop.Click
         EnableDisableICS(CStr(ComboBox1.SelectedItem), virtAdapterName, 0)
-        Process.Start("CMD", "/C netsh wlan stop hostednetwork")
+        ' Process.Start("CMD", "/C netsh wlan stop hostednetwork")
+        CMDStart("/C netsh wlan stop hostednetwork")
         RefreshComboBox()
     End Sub
 
 
-    Public Class MyUtilities
-        Shared Sub RunCommandCom(command As String, arguments As String, permanent As Boolean)
-            Dim p As Process = New Process()
-            Dim pi As ProcessStartInfo = New ProcessStartInfo()
-            pi.Arguments = " " + If(permanent = True, "/K", "/C") + " " + command + " " + arguments
-            pi.FileName = "cmd.exe"
-            p.StartInfo = pi
-            p.Start()
-        End Sub
-    End Class
+    Public Function CMDStart(ByVal strCMD As String)
+
+        Dim startInfo As New ProcessStartInfo("CMD.EXE")
+        startInfo.WindowStyle = ProcessWindowStyle.Minimized
+        startInfo.WindowStyle = ProcessWindowStyle.Hidden
+        startInfo.CreateNoWindow = True
+        startInfo.UseShellExecute = False
+        startInfo.Arguments = strCMD
+        Process.Start(startInfo)
+
+    End Function
 End Class
