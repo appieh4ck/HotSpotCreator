@@ -1,23 +1,12 @@
 ﻿Imports System.Net.NetworkInformation
+Imports MaterialSkin
+Imports MaterialSkin.Controls
 
 Public Class Form1
     Dim virtAdapterName As String
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnStart.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
 
-        Try
-            If TextBox1.Text = "" Or TextBox2.Text = "" Then
-                MsgBox("Gelieve de invoervelden controleren aub")
-            Else
-                'Process.Start("CMD", "/C netsh wlan set hostednetwork mode=allow ssid=" & TextBox1.Text & " key=" & TextBox2.Text)
-                'Process.Start("CMD", "/C netsh wlan start hostednetwork")
-                CMDStart(CStr("/C netsh wlan set hostednetwork mode=allow ssid=" & TextBox1.Text & " key=" & TextBox2.Text))
-                CMDStart(CStr("/C netsh wlan start hostednetwork"))
-                Threading.Thread.Sleep(500)
 
-                EnableDisableICS(CStr(ComboBox1.SelectedItem), virtAdapterName, 1)
-            End If
-        Catch
-        End Try
 
 
     End Sub
@@ -64,7 +53,10 @@ Public Class Form1
     Public Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RefreshComboBox()
         DisplayTypeAndAddress()
-
+        Dim SkinManager As MaterialSkinManager = MaterialSkinManager.Instance
+        SkinManager.AddFormToManage(Me)
+        SkinManager.Theme = MaterialSkinManager.Themes.DARK
+        SkinManager.ColorScheme = New ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE)
     End Sub
     Public Sub RefreshComboBox()
         ComboBox1.Items.Clear()
@@ -92,25 +84,16 @@ Public Class Form1
     End Sub
 
 
-    Private Sub chkShowPass_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowPass.CheckedChanged
-        If chkShowPass.Checked Then
-            TextBox2.UseSystemPasswordChar = False
-        Else
-            TextBox2.UseSystemPasswordChar = True
-        End If
+    Private Sub chkShowPass_CheckedChanged(sender As Object, e As EventArgs)
 
     End Sub
 
-    Private Sub btnStop_Click(sender As Object, e As EventArgs) Handles btnStop.Click
-        EnableDisableICS(CStr(ComboBox1.SelectedItem), virtAdapterName, 0)
-        ' Process.Start("CMD", "/C netsh wlan stop hostednetwork")
-        CMDStart("/C netsh wlan stop hostednetwork")
-        RefreshComboBox()
+    Private Sub btnStop_Click(sender As Object, e As EventArgs)
+
     End Sub
 
 
     Public Function CMDStart(ByVal strCMD As String)
-
         Dim startInfo As New ProcessStartInfo("CMD.EXE")
         startInfo.WindowStyle = ProcessWindowStyle.Minimized
         startInfo.WindowStyle = ProcessWindowStyle.Hidden
@@ -118,6 +101,38 @@ Public Class Form1
         startInfo.UseShellExecute = False
         startInfo.Arguments = strCMD
         Process.Start(startInfo)
-
     End Function
+
+    Private Sub MaterialRaisedButton1_Click(sender As Object, e As EventArgs) Handles btnConnect.Click
+        Try
+            If TextBox1.Text = "" Or TextBox2.Text = "" Then
+                MsgBox("Gelieve de invoervelden controleren aub")
+            Else
+                'Process.Start("CMD", "/C netsh wlan set hostednetwork mode=allow ssid=" & TextBox1.Text & " key=" & TextBox2.Text)
+                'Process.Start("CMD", "/C netsh wlan start hostednetwork")
+                CMDStart(CStr("/C netsh wlan set hostednetwork mode=allow ssid=" & TextBox1.Text & " key=" & TextBox2.Text))
+                CMDStart(CStr("/C netsh wlan start hostednetwork"))
+                Threading.Thread.Sleep(500)
+
+                EnableDisableICS(CStr(ComboBox1.SelectedItem), virtAdapterName, 1)
+            End If
+        Catch
+        End Try
+    End Sub
+
+    Private Sub MaterialFlatButton1_Click(sender As Object, e As EventArgs) Handles btnStop.Click
+        EnableDisableICS(CStr(ComboBox1.SelectedItem), virtAdapterName, 0)
+        ' Process.Start("CMD", "/C netsh wlan stop hostednetwork")
+        CMDStart("/C netsh wlan stop hostednetwork")
+        RefreshComboBox()
+    End Sub
+
+    Private Sub MaterialCheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowPass.CheckedChanged
+        If chkShowPass.Checked Then
+            TextBox2.UseSystemPasswordChar = False
+        Else
+            TextBox2.UseSystemPasswordChar = True
+        End If
+
+    End Sub
 End Class
